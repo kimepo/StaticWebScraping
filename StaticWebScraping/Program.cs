@@ -11,20 +11,21 @@ using System.Globalization;
 using Newtonsoft.Json;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WebScraping
 {
     class program
     {
-       static void Main(string[] args)
+       static void Main(string[] arqs)
         {
-            var corUrl = "https://clientportal.jse.co.za/reports/silo-unavailability-report";
+            var corUrl = "https://clientportal.jse.co.za/_vti_bin/JSE/CommoditiesService.svc/GetSiloData";
             string json = string.Empty;
             HttpWebRequest webRequest;
             webRequest = (HttpWebRequest)WebRequest.Create(corUrl);
 
             webRequest.Timeout = 300000;
-            webRequest.ContentType = "application/json";
+            webRequest.ContentType = "application/json;";
             webRequest.Method = "POST";
             webRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0";
 
@@ -36,6 +37,7 @@ namespace WebScraping
                 {
                     using (var streamReader = new StreamReader(responseStream))
                     {
+                        
                         json = streamReader.ReadToEnd();
                     }
                 }
@@ -44,7 +46,9 @@ namespace WebScraping
             {
                 if (!string.IsNullOrEmpty(json))
                 {
+                   
                     var result = JsonConvert.DeserializeObject<Trades>(json);
+                    //JsonSerializer.Deserialize
                     Console.WriteLine(string.Join("\t", result));
                     foreach (var row in result.Property1)
                     {
@@ -54,14 +58,19 @@ namespace WebScraping
                 Console.ReadKey();
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
+            //try
+            //{
+            //    var writer = new StreamWriter("infoTrade.csv" + DateTime.Today);
+            //    var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            //    {
+            //        csv.WriteRecords(Trades);
+            //    }
+            //}
+            //catch (Exception ex) { Console.WriteLine("неудалось перевести в формат csv,код ошибки:", ex.Message); }
         }
     }
 }
-//var writer = new StreamWriter("infoTrade.csv" + DateTime.Today);
-//var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-//{
-//    csv.WriteRecords(Trades);
-//}
+
 
 
 
