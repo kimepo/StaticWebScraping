@@ -12,13 +12,22 @@ using Newtonsoft.Json;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using System.Text.Json.Serialization;
+using System.Collections;
 
 namespace WebScraping
 {
     class program
     {
-       static void Main(string[] arqs)
+       static void Main()
         {
+            List<Class1> Stock = new List<Class1>();
+
+            
+
             var corUrl = "https://clientportal.jse.co.za/_vti_bin/JSE/CommoditiesService.svc/GetSiloData";
             string json = string.Empty;
             HttpWebRequest webRequest;
@@ -46,16 +55,68 @@ namespace WebScraping
             {
                 if (!string.IsNullOrEmpty(json))
                 {
-                   
-                    var result = JsonConvert.DeserializeObject<Trades>(json);
-                    //JsonSerializer.Deserialize
-                    Console.WriteLine(string.Join("\t", result));
-                    foreach (var row in result.Property1)
+                    
+
+
+                    JArray resultstkObjects = (JArray)(JToken.Parse(json));
+                    foreach (JObject result in resultstkObjects)
                     {
-                        Console.WriteLine(string.Join("\t", row));
+                        Class1 stk = new Class1();
+                        foreach (JProperty property in result.Properties())
+                        {
+                            switch (property.Name)
+                            {
+                                case "Comment":
+                                    stk.Comment = property.Value.ToString();
+                                    Console.WriteLine(stk.Comment);
+                                    break;
+
+                                case "name":
+                                    stk.FromDate = property.Value.ToString();
+                                    Console.WriteLine(stk.FromDate);
+                                    break;
+
+                                case "ID":
+                                    stk.ID = property.Value.ToString();
+                                    Console.WriteLine(stk.ID);
+                                    break;
+
+                                case "Location":
+                                    stk.Location = property.Value.ToString();
+                                    Console.WriteLine(stk.Location);
+                                    break;
+
+                                case "Operator":
+                                    stk.Operator = property.Value.ToString();
+                                    Console.WriteLine(stk.Operator);
+                                    break;
+
+                                case "Reason":
+                                    stk.Reason = property.Value.ToString();
+                                    Console.WriteLine(stk.Reason);
+                                    break;
+
+                                case "Region":
+                                    stk.Region = property.Value.ToString();
+                                    Console.WriteLine(stk.Region);
+                                    break;
+
+                                case "ToDate":
+                                    stk.ToDate = property.Value.ToString();
+                                    Console.WriteLine(stk.ToDate);
+                                    break;
+
+                                    
+                            }
+                            Stock.Add(stk);
+
+                            
+
+                        }
+                        
                     }
+                    Console.ReadKey();
                 }
-                Console.ReadKey();
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             //try
@@ -63,7 +124,7 @@ namespace WebScraping
             //    var writer = new StreamWriter("infoTrade.csv" + DateTime.Today);
             //    var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
             //    {
-            //        csv.WriteRecords(Trades);
+            //        csv.WriteRecords(Stock);
             //    }
             //}
             //catch (Exception ex) { Console.WriteLine("неудалось перевести в формат csv,код ошибки:", ex.Message); }
