@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StaticWebScraping
 {
-    [JsonArrayAttribute]
+    //[JsonArrayAttribute]
     public class Trades
     {
         public Class1[] Property1 { get; set; }
@@ -19,34 +19,30 @@ namespace StaticWebScraping
         {
 
         [JsonProperty(PropertyName = "Comment")]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         [JsonProperty(PropertyName = "FromDate")]
-            public DateTime FromDate { get; set; }
+        public string? FromDate { get; set; }
 
-            [JsonProperty(PropertyName= "ID")]
-            public int ID { get; set; }
+        [JsonProperty(PropertyName = "ID")]
+        public string? ID { get; set; }
 
-            [JsonProperty(PropertyName = "Location")]
-            public string Location { get; set; }
+        [JsonProperty(PropertyName = "Location")]
+        public string? Location { get; set; }
 
-            [JsonProperty(PropertyName = "Operator")]
-            public string Operator { get; set; }
+        [JsonProperty(PropertyName = "Operator")]
+        public string? Operator { get; set; }
 
-            [JsonProperty(PropertyName = "Reason")]
-            public string Reason { get; set; }
+        //[JsonProperty(PropertyName = "Reason")]
+        public string? Reason { get; set; }
 
-            [JsonProperty(PropertyName = "Region")]
-            public string Region { get; set; }
+        //[JsonProperty(PropertyName = "Region")]
+        public string? Region { get; set; }
 
-            [JsonProperty(PropertyName = "ToDate")]
-            public DateTime ToDate { get; set; }
+        //[JsonProperty(PropertyName = "ToDate")]
+        public string? ToDate { get; set; }
 
-        public override string ToString()
-        {
-            return string.Format("{0}\t{1}\t{2}", Comment, FromDate, ID);
-        }
-
+       
     }
 
 }
