@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CsvHelper.Configuration.Attributes;
+using Newtonsoft.Json;
 using OpenQA.Selenium.DevTools.V125.CSS;
 using System;
 using System.Collections.Generic;
@@ -18,28 +19,28 @@ namespace StaticWebScraping
     public class Class1
         {
 
-        [JsonProperty(PropertyName = "Comment")]
+        [Name("Comment")]
         public string? Comment { get; set; }
 
-        [JsonProperty(PropertyName = "FromDate")]
+        [Name("FromDate")]
         public string? FromDate { get; set; }
 
-        [JsonProperty(PropertyName = "ID")]
+        [Name("ID")]
         public string? ID { get; set; }
 
-        [JsonProperty(PropertyName = "Location")]
+        [Name("Location")]
         public string? Location { get; set; }
 
-        [JsonProperty(PropertyName = "Operator")]
+        [Name("Operator")]
         public string? Operator { get; set; }
 
-        //[JsonProperty(PropertyName = "Reason")]
+        [Name("Reason")]
         public string? Reason { get; set; }
 
-        //[JsonProperty(PropertyName = "Region")]
+        [Name("Region")]
         public string? Region { get; set; }
 
-        //[JsonProperty(PropertyName = "ToDate")]
+        [Name("ToDate")]
         public string? ToDate { get; set; }
 
        
