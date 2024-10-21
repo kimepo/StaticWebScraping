@@ -115,19 +115,28 @@ namespace WebScraping
                         }
                         
                     }
+                    Console.WriteLine("нажмите любую клавишу для создания csv");
                     Console.ReadKey();
                 }
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
-            //try
-            //{
-            //    var writer = new StreamWriter("infoTrade.csv" + DateTime.Today);
-            //    var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            //    {
-            //        csv.WriteRecords(Stock);
-            //    }
-            //}
-            //catch (Exception ex) { Console.WriteLine("неудалось перевести в формат csv,код ошибки:", ex.Message); }
+            try
+            {
+                using var writer = new StreamWriter("infoTrade.csv");
+                using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+                {
+                    csv.WriteHeader<Class1>();
+                    csv.NextRecord();
+                    foreach (var stock in Stock)
+                    {
+                        csv.WriteRecord(stock);
+                        csv.NextRecord();
+                    }
+
+                }
+                Console.WriteLine("файл csv создан");
+            }
+            catch (Exception ex) { Console.WriteLine("неудалось перевести в формат csv,код ошибки:", ex.Message); }
         }
     }
 }
