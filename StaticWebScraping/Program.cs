@@ -1,22 +1,12 @@
 ﻿using StaticWebScraping;
-using System.Net.Http.Json;
-using HtmlAgilityPack;
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+
 using CsvHelper;
-using System.IO;
-using System.Text;
+
 using System.Globalization;
-using Newtonsoft.Json;
+
 using System.Net;
 using Newtonsoft.Json.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text.Json.Nodes;
-using System.Text.Json;
-using JsonSerializer = System.Text.Json.JsonSerializer;
-using System.Text.Json.Serialization;
-using System.Collections;
+
 
 namespace WebScraping
 {
@@ -108,12 +98,12 @@ namespace WebScraping
 
                                     
                             }
-                            Stock.Add(stk);
-
                             
 
+
+
                         }
-                        
+                        Stock.Add(stk);
                     }
                     Console.WriteLine("нажмите любую клавишу для создания csv");
                     Console.ReadKey();
@@ -122,11 +112,15 @@ namespace WebScraping
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             try
             {
-                using var writer = new StreamWriter("infoTrade.csv");
+                using var writer = new StreamWriter("infoTrade.csv ");
                 using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                 {
+                    csv.WriteRecord(DateTime.Today);
+                    csv.NextRecord();
+
                     csv.WriteHeader<Class1>();
                     csv.NextRecord();
+                    
                     foreach (var stock in Stock)
                     {
                         csv.WriteRecord(stock);
