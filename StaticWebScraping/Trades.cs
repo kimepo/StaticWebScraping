@@ -19,28 +19,28 @@ namespace StaticWebScraping
     public class Class1
         {
 
-        [Name("Comment")]
+        [Name("Comment" + ";")]
         public string? Comment { get; set; }
 
-        [Name("FromDate")]
+        [Name("FromDate" + ";")]
         public string? FromDate { get; set; }
 
-        [Name("ID")]
+        [Name("ID" + ";")]
         public string? ID { get; set; }
 
-        [Name("Location")]
+        [Name("Location" + ";")]
         public string? Location { get; set; }
 
-        [Name("Operator")]
+        [Name("Operator" + ";")]
         public string? Operator { get; set; }
 
-        [Name("Reason")]
+        [Name("Reason" + ";")]
         public string? Reason { get; set; }
 
-        [Name("Region")]
+        [Name("Region" + ";")]
         public string? Region { get; set; }
 
-        [Name("ToDate")]
+        [Name("ToDate" + ";")]
         public string? ToDate { get; set; }
 
        

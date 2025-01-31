@@ -1,12 +1,15 @@
 ﻿using StaticWebScraping;
 
 using CsvHelper;
+using CsvHelper.Configuration;
 
 using System.Globalization;
-
+using System.IO;
 using System.Net;
 using Newtonsoft.Json.Linq;
-
+using System.Formats.Asn1;
+using System.Xml.Linq;
+using System.Data;
 
 namespace WebScraping
 {
@@ -57,42 +60,42 @@ namespace WebScraping
                             switch (property.Name)
                             {
                                 case "Comment":
-                                    stk.Comment = property.Value.ToString();
+                                    stk.Comment = property.Value.ToString() +";";
                                     Console.WriteLine(stk.Comment);
                                     break;
 
-                                case "name":
-                                    stk.FromDate = property.Value.ToString();
+                                case "FromDate":
+                                    stk.FromDate = property.Value.ToString() + ";";
                                     Console.WriteLine(stk.FromDate);
                                     break;
 
                                 case "ID":
-                                    stk.ID = property.Value.ToString();
+                                    stk.ID = property.Value.ToString() + ";";
                                     Console.WriteLine(stk.ID);
                                     break;
 
                                 case "Location":
-                                    stk.Location = property.Value.ToString();
+                                    stk.Location = property.Value.ToString() + ";";
                                     Console.WriteLine(stk.Location);
                                     break;
 
                                 case "Operator":
-                                    stk.Operator = property.Value.ToString();
+                                    stk.Operator = property.Value.ToString() + ";";
                                     Console.WriteLine(stk.Operator);
                                     break;
 
                                 case "Reason":
-                                    stk.Reason = property.Value.ToString();
+                                    stk.Reason = property.Value.ToString() + ";";
                                     Console.WriteLine(stk.Reason);
                                     break;
 
                                 case "Region":
-                                    stk.Region = property.Value.ToString();
+                                    stk.Region = property.Value.ToString() + ";";
                                     Console.WriteLine(stk.Region);
                                     break;
 
                                 case "ToDate":
-                                    stk.ToDate = property.Value.ToString();
+                                    stk.ToDate = property.Value.ToString() + ";";
                                     Console.WriteLine(stk.ToDate);
                                     break;
 
@@ -106,36 +109,44 @@ namespace WebScraping
                         Stock.Add(stk);
                     }
                     Console.WriteLine("нажмите любую клавишу для создания csv");
-                    Console.ReadKey();
+                    //Console.ReadKey();
                 }
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             try
             {
-                using var writer = new StreamWriter("infoTrade.csv ");
+                DateTime now = DateTime.Now;
+                string name = $"infoTrade.csv_{now.Year}_{now.Month}_{now.Day}.csv";
+                using var writer = new StreamWriter(name);
                 using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+
                 {
-                    csv.WriteRecord(DateTime.Today);
-                    csv.NextRecord();
+
+                    
 
                     csv.WriteHeader<Class1>();
                     csv.NextRecord();
                     
+
                     foreach (var stock in Stock)
                     {
-                        csv.WriteRecord(stock);
+                        csv.WriteRecord(stock );
                         csv.NextRecord();
                     }
-
+                    csv.Dispose();
                 }
+                
                 Console.WriteLine("файл csv создан");
+
             }
-            catch (Exception ex) { Console.WriteLine("неудалось перевести в формат csv,код ошибки:", ex.Message); }
+            catch (Exception ex) { Console.WriteLine("неудалось перевести в формат csv,код ошибки:" + (ex.Message)); }
+
+
         }
     }
 }
 
-
+//+DateTime.Today
 
 
 
